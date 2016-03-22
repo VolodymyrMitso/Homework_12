@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Homework_12</string>
+
+    <string name="s_settings">Settings</string>
+    <string name="s_showUsers">Show users</string>
+    <string name="s_about">About</string>
+</resources>

@@ -48,12 +48,14 @@ public class ShowUsersFragment extends ListFragment {
                 new SimpleCursorAdapter(getActivity(), R.layout.person_card,
                         mCursor,
                         new String[] {
+                                DatabaseHelper.KEY_ID,
                                 DatabaseHelper.PERSON_LOGIN,
                                 DatabaseHelper.PERSON_PASSWORD,
                                 DatabaseHelper.PERSON_FIRST_NAME,
                                 DatabaseHelper.PERSON_LAST_NAME,
                                 DatabaseHelper.PERSON_GENDER },
                         new int[] {
+                                R.id.person_id,
                                 R.id.person_login,
                                 R.id.person_password,
                                 R.id.person_first_name,
@@ -81,26 +83,27 @@ public class ShowUsersFragment extends ListFragment {
     private Cursor doQuery() {
         return mDatabaseHelper.getReadableDatabase()
                 .query(DatabaseHelper.DATABASE_TABLE,
-                        new String[] { "ROWID AS _id",
+                        new String[] {
+                                DatabaseHelper.KEY_ID,
                                 DatabaseHelper.PERSON_LOGIN,
                                 DatabaseHelper.PERSON_PASSWORD,
                                 DatabaseHelper.PERSON_FIRST_NAME,
                                 DatabaseHelper.PERSON_LAST_NAME,
                                 DatabaseHelper.PERSON_GENDER },
-                        null, null, null, null, DatabaseHelper.PERSON_LOGIN);
+                        null, null, null, null, DatabaseHelper.KEY_ID);
     }
 
     private void checkList() {
 
         ArrayList<Person> dataBasePersons = new ArrayList<>();
 
-        Cursor cursor = mDatabaseHelper.getWritableDatabase().query(DatabaseHelper.DATABASE_TABLE, new String[]{
+        Cursor cursor = mDatabaseHelper.getWritableDatabase().query(DatabaseHelper.DATABASE_TABLE, new String[] {
                         DatabaseHelper.PERSON_LOGIN,
                         DatabaseHelper.PERSON_PASSWORD,
                         DatabaseHelper.PERSON_FIRST_NAME,
                         DatabaseHelper.PERSON_LAST_NAME,
                         DatabaseHelper.PERSON_GENDER},
-                null, null, null, null, DatabaseHelper.PERSON_LOGIN);
+                null, null, null, null, DatabaseHelper.KEY_ID);
 
         while (cursor.moveToNext()) {
             String personLogin = cursor.getString(cursor.getColumnIndex(DatabaseHelper.PERSON_LOGIN));
@@ -159,7 +162,7 @@ public class ShowUsersFragment extends ListFragment {
         final String personGender = cursor.getString(cursor.getColumnIndex(DatabaseHelper.PERSON_GENDER));
 
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
-        alertDialog.setTitle("Edit person");
+        alertDialog.setTitle("Edit / Delete");
         LayoutInflater inflater = getActivity().getLayoutInflater();
         RelativeLayout relativeLayout = (RelativeLayout) inflater.inflate(R.layout.person_card_edit, null);
         alertDialog.setView(relativeLayout);
@@ -176,6 +179,8 @@ public class ShowUsersFragment extends ListFragment {
         personLastNameEdit.setText(personLastName);
         personGenderEdit.setText(personGender);
 
+        final long finalID = id;
+
         alertDialog.setPositiveButton("Edit", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface arg0, int arg1) {
 
@@ -187,28 +192,20 @@ public class ShowUsersFragment extends ListFragment {
                 values.put(DatabaseHelper.PERSON_GENDER, personGenderEdit.getText().toString());
 
                 mDatabaseHelper.getWritableDatabase().update(DatabaseHelper.DATABASE_TABLE,
-                        values,
-                        DatabaseHelper.PERSON_LOGIN + " = ? OR " +
-                        DatabaseHelper.PERSON_PASSWORD + " = ? OR " +
-                        DatabaseHelper.PERSON_FIRST_NAME + " = ? OR " +
-                        DatabaseHelper.PERSON_LAST_NAME + " = ? OR " +
-                        DatabaseHelper.PERSON_GENDER + " = ?",
-                        new String[] { personLogin, personPassword, personFirstName, personLastName, personGender });
-
-//                mDatabaseHelper.getWritableDatabase().update(DatabaseHelper.DATABASE_TABLE, values, DatabaseHelper.PERSON_PASSWORD + "= ?", new String[]{personPassword});
-//                mDatabaseHelper.getWritableDatabase().update(DatabaseHelper.DATABASE_TABLE, values, DatabaseHelper.PERSON_FIRST_NAME + "= ?", new String[]{personFirstName});
-//                mDatabaseHelper.getWritableDatabase().update(DatabaseHelper.DATABASE_TABLE, values, DatabaseHelper.PERSON_LAST_NAME + "= ?", new String[] { personLastName });
-//                mDatabaseHelper.getWritableDatabase().update(DatabaseHelper.DATABASE_TABLE, values, DatabaseHelper.PERSON_GENDER + "= ?", new String[] { personGender });
+                        values, DatabaseHelper.KEY_ID + "=" + finalID, null);
 
                 ((CursorAdapter)getListAdapter()).changeCursor(doQuery());
             }
         });
 
-//        myDialog.setNeutralButton("Update", new DialogInterface.OnClickListener() {
-//            public void onClick(DialogInterface arg0, int arg1) {
-//
-//            }
-//        });
+        alertDialog.setNeutralButton("Delete", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface arg0, int arg1) {
+                mDatabaseHelper.getWritableDatabase().delete(DatabaseHelper.DATABASE_TABLE,
+                        DatabaseHelper.KEY_ID + "=" + finalID, null);
+
+                ((CursorAdapter)getListAdapter()).changeCursor(doQuery());
+            }
+        });
 
         alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface arg0, int arg1) {
@@ -218,18 +215,18 @@ public class ShowUsersFragment extends ListFragment {
 
         alertDialog.show();
 
-//        Toast.makeText(getActivity(), String.valueOf(id), Toast.LENGTH_SHORT).show();
-//
-//        ArrayList<Person> persons = loadList();
-//        int personId = (int) id;
-//        Person person = persons.get(personId - 1);
-//        person.setLogin(personLoginEdit.getText().toString());
-//        person.setPassword(personPasswordEdit.getText().toString());
-//        person.setFirstName(personFirstNameEdit.getText().toString());
-//        person.setLastName(personLastNameEdit.getText().toString());
-//        person.setGender(personGenderEdit.getText().toString());
-//
-//        saveList(persons);
+        Toast.makeText(getActivity(), String.valueOf(id), Toast.LENGTH_SHORT).show();
+
+        ArrayList<Person> persons = loadList();
+        int personId = (int) id;
+        Person person = persons.get(personId - 1);
+        person.setLogin(personLoginEdit.getText().toString());
+        person.setPassword(personPasswordEdit.getText().toString());
+        person.setFirstName(personFirstNameEdit.getText().toString());
+        person.setLastName(personLastNameEdit.getText().toString());
+        person.setGender(personGenderEdit.getText().toString());
+
+        saveList(persons);
     }
 
     public ArrayList<Person> loadList() {

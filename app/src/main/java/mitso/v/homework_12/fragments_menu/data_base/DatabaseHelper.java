@@ -13,6 +13,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_TABLE = "persons";
 
+    public static final String KEY_ID = "_id";
     public static final String PERSON_LOGIN = "PERSON_LOGIN";
     public static final String PERSON_PASSWORD = "PERSON_PASSWORD";
     public static final String PERSON_FIRST_NAME = "PERSON_FIRST_NAME";
@@ -28,21 +29,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE persons (" +
-                PERSON_LOGIN + " TEXT, " +
-                PERSON_PASSWORD + " TEXT, " +
-                PERSON_FIRST_NAME + " TEXT, " +
-                PERSON_LAST_NAME + " TEXT, " +
-                PERSON_GENDER + " TEXT);");
-//
-//        ContentValues cv = new ContentValues();
-//
-//        cv.put(PERSON_LOGIN, "genius789");
-//        cv.put(PERSON_PASSWORD, "z0951308575");
-//        cv.put(PERSON_FIRST_NAME, "VOLODYMYR");
-//        cv.put(PERSON_LAST_NAME, "MITSO");
-//        cv.put(PERSON_GENDER, "MALE");
-//
-//        db.insert(DATABASE_TABLE, PERSON_LOGIN, cv);
+                KEY_ID + " integer primary key autoincrement, " +
+                PERSON_LOGIN + " text not null, " +
+                PERSON_PASSWORD + " text not null, " +
+                PERSON_FIRST_NAME + " text not null, " +
+                PERSON_LAST_NAME + " text not null, " +
+                PERSON_GENDER + " text not null);");
     }
 
     @Override

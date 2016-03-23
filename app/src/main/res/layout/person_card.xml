@@ -190,4 +190,42 @@
         android:textColor="@android:color/black"
         android:background="@android:color/holo_blue_light"
         android:layout_alignTop="@+id/space_5" />
+
+    <Space
+        android:layout_width="5dp"
+        android:layout_height="15dp"
+        android:id="@+id/space_6"
+        android:layout_below="@+id/space_5"
+        android:layout_marginTop="5dp"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:gravity="end"
+        android:textSize="12sp"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+
+        android:layout_toLeftOf="@+id/space_6"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignBottom="@+id/space_6"
+        android:text="PERSON_ID:"
+        android:background="@android:color/darker_gray"
+        android:textColor="@android:color/black"
+        android:layout_alignTop="@+id/space_6" />
+
+    <TextView
+        android:textSize="12sp"
+        android:id="@+id/person_id"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_toRightOf="@+id/space_6"
+        android:layout_toEndOf="@+id/space_6"
+        android:layout_alignBottom="@+id/space_6"
+        android:textColor="@android:color/black"
+        android:background="@android:color/holo_blue_light"
+        android:layout_alignTop="@+id/space_6" />
 </RelativeLayout>

@@ -101,6 +101,7 @@ public class MainActivity extends AppCompatActivity implements EventHandler {
 
             persons.add(person);
             getDataFragment().setPersons(persons);
+            saveList(persons);
 
             args.putString(Constants.KEY_DIALOG_MESSAGE,
                     getResources().getString(R.string.s_dm_user_n) +
@@ -118,6 +119,7 @@ public class MainActivity extends AppCompatActivity implements EventHandler {
     @Override
     protected void onResume() {
         super.onResume();
+//        persons = loadList();
         if (getDataFragment().getPersons() != null)
             persons = getDataFragment().getPersons();
 
@@ -230,6 +232,4 @@ public class MainActivity extends AppCompatActivity implements EventHandler {
         super.onStop();
         saveList(persons);
     }
-
-
 }

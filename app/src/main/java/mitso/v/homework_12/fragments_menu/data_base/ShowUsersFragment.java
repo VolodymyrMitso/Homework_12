@@ -127,8 +127,8 @@ public class ShowUsersFragment extends ListFragment {
 //            Toast.makeText(getActivity(), "null", Toast.LENGTH_LONG).show();
 
 
-        if (listPersons != null)
-            if (listPersons.size() > dataBasePersons.size())
+        if (listPersons != null) {
+            if (listPersons.size() > dataBasePersons.size()) {
 
                 for (int i = dataBasePersons.size(); i < listPersons.size(); i++) {
                     ContentValues cv = new ContentValues();
@@ -140,8 +140,10 @@ public class ShowUsersFragment extends ListFragment {
                     cv.put(DatabaseHelper.PERSON_GENDER, listPersons.get(i).getGender());
 
                     mDatabaseHelper.getWritableDatabase().insert(DatabaseHelper.DATABASE_TABLE, DatabaseHelper.PERSON_LOGIN, cv);
-                    ((CursorAdapter)getListAdapter()).changeCursor(doQuery());
+                    ((CursorAdapter) getListAdapter()).changeCursor(doQuery());
                 }
+            }
+        }
     }
 
     @Override
@@ -152,10 +154,9 @@ public class ShowUsersFragment extends ListFragment {
 
         final String personLogin = cursor.getString(cursor.getColumnIndex(DatabaseHelper.PERSON_LOGIN));
         final String personPassword = cursor.getString(cursor.getColumnIndex(DatabaseHelper.PERSON_PASSWORD));
-        String personFirstName = cursor.getString(cursor.getColumnIndex(DatabaseHelper.PERSON_FIRST_NAME));
-        String personLastName = cursor.getString(cursor.getColumnIndex(DatabaseHelper.PERSON_LAST_NAME));
-        String personGender = cursor.getString(cursor.getColumnIndex(DatabaseHelper.PERSON_GENDER));
-
+        final String personFirstName = cursor.getString(cursor.getColumnIndex(DatabaseHelper.PERSON_FIRST_NAME));
+        final String personLastName = cursor.getString(cursor.getColumnIndex(DatabaseHelper.PERSON_LAST_NAME));
+        final String personGender = cursor.getString(cursor.getColumnIndex(DatabaseHelper.PERSON_GENDER));
 
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
         alertDialog.setTitle("Edit person");
@@ -171,6 +172,9 @@ public class ShowUsersFragment extends ListFragment {
 
         personLoginEdit.setText(personLogin);
         personPasswordEdit.setText(personPassword);
+        personFirstNameEdit.setText(personFirstName);
+        personLastNameEdit.setText(personLastName);
+        personGenderEdit.setText(personGender);
 
         alertDialog.setPositiveButton("Edit", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface arg0, int arg1) {
@@ -178,12 +182,25 @@ public class ShowUsersFragment extends ListFragment {
                 ContentValues values = new ContentValues();
                 values.put(DatabaseHelper.PERSON_LOGIN, personLoginEdit.getText().toString());
                 values.put(DatabaseHelper.PERSON_PASSWORD, personPasswordEdit.getText().toString());
+                values.put(DatabaseHelper.PERSON_FIRST_NAME, personFirstNameEdit.getText().toString());
+                values.put(DatabaseHelper.PERSON_LAST_NAME, personLastNameEdit.getText().toString());
+                values.put(DatabaseHelper.PERSON_GENDER, personGenderEdit.getText().toString());
 
-                mDatabaseHelper.getWritableDatabase().update(mDatabaseHelper.DATABASE_TABLE, values, mDatabaseHelper.PERSON_LOGIN + "= ?", new String[]{personLogin});
-                mDatabaseHelper.getWritableDatabase().update(mDatabaseHelper.DATABASE_TABLE, values, mDatabaseHelper.PERSON_PASSWORD + "= ?", new String[]{personPassword});
+                mDatabaseHelper.getWritableDatabase().update(DatabaseHelper.DATABASE_TABLE,
+                        values,
+                        DatabaseHelper.PERSON_LOGIN + " = ? OR " +
+                        DatabaseHelper.PERSON_PASSWORD + " = ? OR " +
+                        DatabaseHelper.PERSON_FIRST_NAME + " = ? OR " +
+                        DatabaseHelper.PERSON_LAST_NAME + " = ? OR " +
+                        DatabaseHelper.PERSON_GENDER + " = ?",
+                        new String[] { personLogin, personPassword, personFirstName, personLastName, personGender });
+
+//                mDatabaseHelper.getWritableDatabase().update(DatabaseHelper.DATABASE_TABLE, values, DatabaseHelper.PERSON_PASSWORD + "= ?", new String[]{personPassword});
+//                mDatabaseHelper.getWritableDatabase().update(DatabaseHelper.DATABASE_TABLE, values, DatabaseHelper.PERSON_FIRST_NAME + "= ?", new String[]{personFirstName});
+//                mDatabaseHelper.getWritableDatabase().update(DatabaseHelper.DATABASE_TABLE, values, DatabaseHelper.PERSON_LAST_NAME + "= ?", new String[] { personLastName });
+//                mDatabaseHelper.getWritableDatabase().update(DatabaseHelper.DATABASE_TABLE, values, DatabaseHelper.PERSON_GENDER + "= ?", new String[] { personGender });
 
                 ((CursorAdapter)getListAdapter()).changeCursor(doQuery());
-
             }
         });
 
@@ -202,6 +219,17 @@ public class ShowUsersFragment extends ListFragment {
         alertDialog.show();
 
 //        Toast.makeText(getActivity(), String.valueOf(id), Toast.LENGTH_SHORT).show();
+//
+//        ArrayList<Person> persons = loadList();
+//        int personId = (int) id;
+//        Person person = persons.get(personId - 1);
+//        person.setLogin(personLoginEdit.getText().toString());
+//        person.setPassword(personPasswordEdit.getText().toString());
+//        person.setFirstName(personFirstNameEdit.getText().toString());
+//        person.setLastName(personLastNameEdit.getText().toString());
+//        person.setGender(personGenderEdit.getText().toString());
+//
+//        saveList(persons);
     }
 
     public ArrayList<Person> loadList() {
@@ -220,5 +248,17 @@ public class ShowUsersFragment extends ListFragment {
         Toast.makeText(getContext(), "list loaded", Toast.LENGTH_LONG).show();
 
         return (ArrayList<Person>) persons;
+    }
+
+    public void saveList(ArrayList<Person> persons) {
+        SharedPreferences sPref = getActivity().getPreferences(0x0000);
+        SharedPreferences.Editor ed = sPref.edit();
+
+        Gson gson = new Gson();
+        String jsonPersons = gson.toJson(persons);
+
+        ed.putString("list", jsonPersons);
+        ed.apply();
+        Toast.makeText(getContext(), "list saved", Toast.LENGTH_LONG).show();
     }
 }

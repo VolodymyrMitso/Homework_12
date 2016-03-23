@@ -1,13 +1,19 @@
 package mitso.v.homework_12;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import mitso.v.homework_12.constants.Constants;
 import mitso.v.homework_12.fragments.DataHeadlessFragment;
@@ -33,6 +39,8 @@ public class MainActivity extends AppCompatActivity implements EventHandler {
             commitSignInFragment();
             commitHeadlessFragment();
         }
+
+        persons = loadList();
     }
 
     private void commitSignInFragment() {
@@ -186,4 +194,42 @@ public class MainActivity extends AppCompatActivity implements EventHandler {
                 .addToBackStack(null)
                 .commitAllowingStateLoss();
     }
+
+    public void saveList(ArrayList<Person> persons) {
+        SharedPreferences sPref = getPreferences(MODE_PRIVATE);
+        SharedPreferences.Editor ed = sPref.edit();
+
+        Gson gson = new Gson();
+        String jsonPersons = gson.toJson(persons);
+
+        ed.putString("list", jsonPersons);
+        ed.apply();
+        Toast.makeText(this, "list saved", Toast.LENGTH_LONG).show();
+    }
+
+    public ArrayList<Person> loadList() {
+        SharedPreferences sPref = getPreferences(MODE_PRIVATE);
+        List<Person> persons;
+        if (sPref.contains("list")) {
+            String jsonFavorites = sPref.getString("list", null);
+            Gson gson = new Gson();
+            Person[] personsArray = gson.fromJson(jsonFavorites,
+                    Person[].class);
+            persons = Arrays.asList(personsArray);
+            persons = new ArrayList<Person>(persons);
+        } else
+            return new ArrayList<Person>();
+
+        Toast.makeText(this, "list loaded", Toast.LENGTH_LONG).show();
+
+        return (ArrayList<Person>) persons;
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        saveList(persons);
+    }
+
+
 }

@@ -119,9 +119,11 @@ public class MainActivity extends AppCompatActivity implements EventHandler {
     @Override
     protected void onResume() {
         super.onResume();
-//        persons = loadList();
+
         if (getDataFragment().getPersons() != null)
             persons = getDataFragment().getPersons();
+
+        persons = loadList();
 
         if (getSupportFragmentManager().findFragmentById(R.id.fl_FragmentContainer_AM) instanceof SignInFragment) {
             SignInFragment signInFragment =

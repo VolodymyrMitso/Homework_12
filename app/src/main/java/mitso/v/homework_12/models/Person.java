@@ -14,6 +14,14 @@ public class Person implements Parcelable {
     public Person() {
     }
 
+    public Person(String login, String password, String firstName, String lastName, String gender) {
+        this.login = login;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
+    }
+
     public String getLogin() {
         return login;
     }
@@ -88,4 +96,15 @@ public class Person implements Parcelable {
             return new Person[size];
         }
     };
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", gender='" + gender + '\'' +
+                '}';
+    }
 }

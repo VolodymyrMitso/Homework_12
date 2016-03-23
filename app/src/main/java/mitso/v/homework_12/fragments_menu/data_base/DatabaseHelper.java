@@ -1,11 +1,12 @@
-package mitso.v.homework_12.fragments_menu.DataBase;
+package mitso.v.homework_12.fragments_menu.data_base;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
+
+    Context context;
 
     private static final String DATABASE_NAME = "persons.db";
     private static final int DATABASE_VERSION = 1;
@@ -21,6 +22,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        this.context = context;
     }
 
     @Override
@@ -31,16 +33,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 PERSON_FIRST_NAME + " TEXT, " +
                 PERSON_LAST_NAME + " TEXT, " +
                 PERSON_GENDER + " TEXT);");
-
-        ContentValues cv = new ContentValues();
-
-        cv.put(PERSON_LOGIN, "genius789");
-        cv.put(PERSON_PASSWORD, "z0951308575");
-        cv.put(PERSON_FIRST_NAME, "VOLODYMYR");
-        cv.put(PERSON_LAST_NAME, "MITSO");
-        cv.put(PERSON_GENDER, "MALE");
-
-        db.insert(DATABASE_TABLE, PERSON_LOGIN, cv);
+//
+//        ContentValues cv = new ContentValues();
+//
+//        cv.put(PERSON_LOGIN, "genius789");
+//        cv.put(PERSON_PASSWORD, "z0951308575");
+//        cv.put(PERSON_FIRST_NAME, "VOLODYMYR");
+//        cv.put(PERSON_LAST_NAME, "MITSO");
+//        cv.put(PERSON_GENDER, "MALE");
+//
+//        db.insert(DATABASE_TABLE, PERSON_LOGIN, cv);
     }
 
     @Override

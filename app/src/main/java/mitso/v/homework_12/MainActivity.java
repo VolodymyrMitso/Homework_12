@@ -16,8 +16,8 @@ import mitso.v.homework_12.fragments.RegistrationFragment;
 import mitso.v.homework_12.fragments.SignInFragment;
 import mitso.v.homework_12.fragments_menu.AboutFragment;
 import mitso.v.homework_12.fragments_menu.BaseFragment;
-import mitso.v.homework_12.fragments_menu.DataBase.ShowUsersFragment;
 import mitso.v.homework_12.fragments_menu.SettingsFragment;
+import mitso.v.homework_12.fragments_menu.data_base.ShowUsersFragment;
 import mitso.v.homework_12.interfaces.EventHandler;
 import mitso.v.homework_12.models.Person;
 

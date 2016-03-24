@@ -38,13 +38,13 @@ public class MainActivity extends AppCompatActivity implements EventHandler {
     }
 
     private void commitSignInFragment() {
-        SignInFragment signInFragment = new SignInFragment();
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fl_FragmentContainer_AM, signInFragment, Constants.SIGN_IN_FRAGMENT_TAG)
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                .commit();
-        signInFragment.setEventHandler(this);
+            SignInFragment signInFragment = new SignInFragment();
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fl_FragmentContainer_AM, signInFragment, Constants.SIGN_IN_FRAGMENT_TAG)
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                    .commit();
+            signInFragment.setEventHandler(this);
     }
 
     @Override
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements EventHandler {
                 .beginTransaction()
                 .replace(R.id.fl_FragmentContainer_AM, registrationFragment, Constants.REGISTRATION_FRAGMENT_TAG)
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                .addToBackStack(null)
+                .addToBackStack(Constants.REGISTRATION_FRAGMENT_TAG)
                 .commit();
         registrationFragment.setEventHandler(this);
     }
@@ -136,11 +136,10 @@ public class MainActivity extends AppCompatActivity implements EventHandler {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        if (getSupportFragmentManager().findFragmentById(R.id.fl_FragmentContainer_AM) instanceof SignInFragment) {
-            SignInFragment signInFragment =
-                    (SignInFragment) getSupportFragmentManager().findFragmentById(R.id.fl_FragmentContainer_AM);
-            signInFragment.setEventHandler(this);
+        if (getSupportFragmentManager().getBackStackEntryCount() >= 1) {
+            commitSignInFragment();
+        } else {
+            super.onBackPressed();
         }
     }
 
@@ -158,23 +157,26 @@ public class MainActivity extends AppCompatActivity implements EventHandler {
             case R.id.mi_Settings:
                 getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.fl_FragmentContainer_AM, new SettingsFragment())
-                        .addToBackStack(null)
-                        .commitAllowingStateLoss();
+                        .replace(R.id.fl_FragmentContainer_AM, new SettingsFragment(), "settings tag")
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                        .addToBackStack("settings tag")
+                        .commit();
                 return true;
             case R.id.mi_ShowUsers:
                 getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.fl_FragmentContainer_AM, new ShowUsersFragment())
-                        .addToBackStack(null)
-                        .commitAllowingStateLoss();
+                        .replace(R.id.fl_FragmentContainer_AM, new ShowUsersFragment(), "show users tag")
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                        .addToBackStack("show users tag")
+                        .commit();
                 return true;
             case R.id.mi_About:
                 getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.fl_FragmentContainer_AM, new AboutFragment())
-                        .addToBackStack(null)
-                        .commitAllowingStateLoss();
+                        .replace(R.id.fl_FragmentContainer_AM, new AboutFragment(), "about tag")
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                        .addToBackStack("about tag")
+                        .commit();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

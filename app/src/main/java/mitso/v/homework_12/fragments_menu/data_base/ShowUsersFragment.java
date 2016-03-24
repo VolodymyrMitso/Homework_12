@@ -14,7 +14,6 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SimpleCursorAdapter;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -29,8 +28,6 @@ public class ShowUsersFragment extends ListFragment {
 
     private DatabaseHelper mDatabaseHelper = null;
     private Cursor mCursor = null;
-
-//    private SQLiteDatabase mSqLiteDatabase;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -94,47 +91,13 @@ public class ShowUsersFragment extends ListFragment {
     }
 
     private void checkList() {
-
-        ArrayList<Person> dataBasePersons = new ArrayList<>();
-
-        Cursor cursor = mDatabaseHelper.getWritableDatabase().query(DatabaseHelper.DATABASE_TABLE, new String[] {
-                        DatabaseHelper.KEY_ID,
-                        DatabaseHelper.PERSON_LOGIN,
-                        DatabaseHelper.PERSON_PASSWORD,
-                        DatabaseHelper.PERSON_FIRST_NAME,
-                        DatabaseHelper.PERSON_LAST_NAME,
-                        DatabaseHelper.PERSON_GENDER},
-                null, null, null, null, DatabaseHelper.KEY_ID);
-
-        while (cursor.moveToNext()) {
-            String personLogin = cursor.getString(cursor.getColumnIndex(DatabaseHelper.PERSON_LOGIN));
-            String personPassword = cursor.getString(cursor.getColumnIndex(DatabaseHelper.PERSON_PASSWORD));
-            String personFirstName = cursor.getString(cursor.getColumnIndex(DatabaseHelper.PERSON_FIRST_NAME));
-            String personLastName = cursor.getString(cursor.getColumnIndex(DatabaseHelper.PERSON_LAST_NAME));
-            String personGender = cursor.getString(cursor.getColumnIndex(DatabaseHelper.PERSON_GENDER));
-
-            dataBasePersons.add(new Person(personLogin, personPassword, personFirstName, personLastName, personGender));
-        }
-        cursor.close();
-
-//        if (dataBasePersons != null)
-//            Toast.makeText(getActivity(), String.valueOf(dataBasePersons.size()), Toast.LENGTH_LONG).show();
-//        else
-//            Toast.makeText(getActivity(), "null", Toast.LENGTH_LONG).show();
-
-//        ArrayList<Person> listPersons = ((MainActivity) getActivity()).getDataFragment().getPersons();
+        ArrayList<Person> databasePersons = getDatabasePersons();
         ArrayList<Person> listPersons = loadList();
 
-//        if (persons != null)
-//            Toast.makeText(getActivity(), String.valueOf(persons.size()), Toast.LENGTH_LONG).show();
-//        else
-//            Toast.makeText(getActivity(), "null", Toast.LENGTH_LONG).show();
-
-
         if (listPersons != null) {
-            if (listPersons.size() > dataBasePersons.size()) {
+            if (listPersons.size() > databasePersons.size()) {
 
-                for (int i = dataBasePersons.size(); i < listPersons.size(); i++) {
+                for (int i = databasePersons.size(); i < listPersons.size(); i++) {
                     ContentValues cv = new ContentValues();
 
                     cv.put(DatabaseHelper.PERSON_LOGIN, listPersons.get(i).getLogin());
@@ -209,10 +172,12 @@ public class ShowUsersFragment extends ListFragment {
         });
 
         alertDialog.show();
+    }
 
-
-
-
+    @Override
+    public void onStop() {
+        super.onStop();
+        saveList(getDatabasePersons());
     }
 
     public ArrayList<Person> loadList() {
@@ -224,34 +189,25 @@ public class ShowUsersFragment extends ListFragment {
             Person[] personsArray = gson.fromJson(jsonFavorites,
                     Person[].class);
             persons = Arrays.asList(personsArray);
-            persons = new ArrayList<Person>(persons);
+            persons = new ArrayList<>(persons);
         } else
-            return new ArrayList<Person>();
-
-        Toast.makeText(getContext(), "list loaded", Toast.LENGTH_LONG).show();
-
+            return new ArrayList<>();
         return (ArrayList<Person>) persons;
     }
 
     public void saveList(ArrayList<Person> persons) {
         SharedPreferences sPref = getActivity().getPreferences(0x0000);
         SharedPreferences.Editor ed = sPref.edit();
-
         Gson gson = new Gson();
         String jsonPersons = gson.toJson(persons);
-
         ed.putString("list", jsonPersons);
         ed.apply();
-        Toast.makeText(getContext(), "list saved", Toast.LENGTH_LONG).show();
     }
 
-    @Override
-    public void onStop() {
-        super.onStop();
+    private ArrayList<Person> getDatabasePersons() {
+        ArrayList<Person> databasePersons = new ArrayList<>();
 
-        ArrayList<Person> dataBasePersons = new ArrayList<>();
-
-        Cursor cursor2 = mDatabaseHelper.getWritableDatabase().query(DatabaseHelper.DATABASE_TABLE, new String[] {
+        Cursor cursor = mDatabaseHelper.getWritableDatabase().query(DatabaseHelper.DATABASE_TABLE, new String[] {
                         DatabaseHelper.KEY_ID,
                         DatabaseHelper.PERSON_LOGIN,
                         DatabaseHelper.PERSON_PASSWORD,
@@ -260,23 +216,17 @@ public class ShowUsersFragment extends ListFragment {
                         DatabaseHelper.PERSON_GENDER},
                 null, null, null, null, DatabaseHelper.KEY_ID);
 
-        while (cursor2.moveToNext()) {
-            String personLogin2 = cursor2.getString(cursor2.getColumnIndex(DatabaseHelper.PERSON_LOGIN));
-            String personPassword2 = cursor2.getString(cursor2.getColumnIndex(DatabaseHelper.PERSON_PASSWORD));
-            String personFirstName2 = cursor2.getString(cursor2.getColumnIndex(DatabaseHelper.PERSON_FIRST_NAME));
-            String personLastName2 = cursor2.getString(cursor2.getColumnIndex(DatabaseHelper.PERSON_LAST_NAME));
-            String personGender2 = cursor2.getString(cursor2.getColumnIndex(DatabaseHelper.PERSON_GENDER));
+        while (cursor.moveToNext()) {
+            String personLogin = cursor.getString(cursor.getColumnIndex(DatabaseHelper.PERSON_LOGIN));
+            String personPassword = cursor.getString(cursor.getColumnIndex(DatabaseHelper.PERSON_PASSWORD));
+            String personFirstName = cursor.getString(cursor.getColumnIndex(DatabaseHelper.PERSON_FIRST_NAME));
+            String personLastName = cursor.getString(cursor.getColumnIndex(DatabaseHelper.PERSON_LAST_NAME));
+            String personGender = cursor.getString(cursor.getColumnIndex(DatabaseHelper.PERSON_GENDER));
 
-            dataBasePersons.add(new Person(personLogin2, personPassword2, personFirstName2, personLastName2, personGender2));
+            databasePersons.add(new Person(personLogin, personPassword, personFirstName, personLastName, personGender));
         }
-        cursor2.close();
+        cursor.close();
 
-        saveList(dataBasePersons);
-
-        if (dataBasePersons != null)
-            Toast.makeText(getActivity(), String.valueOf(dataBasePersons.size()), Toast.LENGTH_LONG).show();
-        else
-            Toast.makeText(getActivity(), "null", Toast.LENGTH_LONG).show();
-
+        return databasePersons;
     }
 }

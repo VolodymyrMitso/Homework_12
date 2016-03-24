@@ -1,6 +1,7 @@
 package mitso.v.homework_12.fragments;
 
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -11,9 +12,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import com.google.gson.Gson;
 
-import mitso.v.homework_12.MainActivity;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import mitso.v.homework_12.R;
 import mitso.v.homework_12.interfaces.EventHandler;
 import mitso.v.homework_12.models.Person;
@@ -71,7 +75,7 @@ public class SignInFragment extends Fragment {
     }
 
     private void setGreeting() {
-        ArrayList<Person> persons = ((MainActivity) getActivity()).getDataFragment().getPersons();
+        ArrayList<Person> persons = loadList();
         if (persons != null) {
             if (!persons.isEmpty()) {
                 for (int i = 0; i < persons.size(); i++) {
@@ -97,7 +101,7 @@ public class SignInFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        ArrayList<Person> persons = ((MainActivity) getActivity()).getDataFragment().getPersons();
+        ArrayList<Person> persons = loadList();
         if (persons != null) {
             if (!persons.isEmpty()) {
 
@@ -122,5 +126,20 @@ public class SignInFragment extends Fragment {
 
     public void releaseEventHandler() {
         mEventHandler = null;
+    }
+
+    public ArrayList<Person> loadList() {
+        SharedPreferences sPref = getActivity().getPreferences(0x0000);
+        List<Person> persons;
+        if (sPref.contains("list")) {
+            String jsonFavorites = sPref.getString("list", null);
+            Gson gson = new Gson();
+            Person[] personsArray = gson.fromJson(jsonFavorites,
+                    Person[].class);
+            persons = Arrays.asList(personsArray);
+            persons = new ArrayList<>(persons);
+        } else
+            return new ArrayList<>();
+        return (ArrayList<Person>) persons;
     }
 }

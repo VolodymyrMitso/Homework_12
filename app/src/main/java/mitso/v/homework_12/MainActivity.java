@@ -7,7 +7,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -35,12 +34,11 @@ public class MainActivity extends AppCompatActivity implements EventHandler {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+        persons = loadList();
         if (savedInstanceState == null) {
             commitSignInFragment();
             commitHeadlessFragment();
         }
-
-        persons = loadList();
     }
 
     private void commitSignInFragment() {
@@ -67,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements EventHandler {
 
     @Override
     public void signIn(String _login, String _password, AlertDialog _alertDialog) {
+        persons = loadList();
         MainSupport.signInSupport(this, persons, _login, _password, _alertDialog);
     }
 
@@ -99,8 +98,8 @@ public class MainActivity extends AppCompatActivity implements EventHandler {
             person.setLastName(_lastName);
             person.setGender(_gender);
 
+            persons = loadList();
             persons.add(person);
-            getDataFragment().setPersons(persons);
             saveList(persons);
 
             args.putString(Constants.KEY_DIALOG_MESSAGE,
@@ -120,9 +119,6 @@ public class MainActivity extends AppCompatActivity implements EventHandler {
     protected void onResume() {
         super.onResume();
 
-        if (getDataFragment().getPersons() != null)
-            persons = getDataFragment().getPersons();
-
         persons = loadList();
 
         if (getSupportFragmentManager().findFragmentById(R.id.fl_FragmentContainer_AM) instanceof SignInFragment) {
@@ -139,7 +135,9 @@ public class MainActivity extends AppCompatActivity implements EventHandler {
     @Override
     protected void onPause() {
         super.onPause();
-        getDataFragment().setPersons(persons);
+
+        persons = loadList();
+        saveList(persons);
 
         if (getSupportFragmentManager().findFragmentById(R.id.fl_FragmentContainer_AM) instanceof SignInFragment) {
             SignInFragment signInFragment =
@@ -202,13 +200,10 @@ public class MainActivity extends AppCompatActivity implements EventHandler {
     public void saveList(ArrayList<Person> persons) {
         SharedPreferences sPref = getPreferences(MODE_PRIVATE);
         SharedPreferences.Editor ed = sPref.edit();
-
         Gson gson = new Gson();
         String jsonPersons = gson.toJson(persons);
-
         ed.putString("list", jsonPersons);
         ed.apply();
-        Toast.makeText(this, "list saved", Toast.LENGTH_LONG).show();
     }
 
     public ArrayList<Person> loadList() {
@@ -220,18 +215,9 @@ public class MainActivity extends AppCompatActivity implements EventHandler {
             Person[] personsArray = gson.fromJson(jsonFavorites,
                     Person[].class);
             persons = Arrays.asList(personsArray);
-            persons = new ArrayList<Person>(persons);
+            persons = new ArrayList<>(persons);
         } else
-            return new ArrayList<Person>();
-
-        Toast.makeText(this, "list loaded", Toast.LENGTH_LONG).show();
-
+            return new ArrayList<>();
         return (ArrayList<Person>) persons;
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        saveList(persons);
     }
 }

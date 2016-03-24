@@ -9,13 +9,13 @@
 
     <Space
         android:layout_width="5dp"
-        android:layout_height="15dp"
+        android:layout_height="30dp"
         android:id="@+id/space_1"
         android:layout_centerHorizontal="true" />
 
     <TextView
         android:gravity="end"
-        android:textSize="12sp"
+        android:textSize="15sp"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_alignParentTop="true"
@@ -28,7 +28,7 @@
         android:textColor="@android:color/black"/>
 
     <EditText
-        android:textSize="12sp"
+        android:textSize="15sp"
         android:id="@+id/person_login_edit"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
@@ -43,7 +43,7 @@
 
     <Space
         android:layout_width="5dp"
-        android:layout_height="15dp"
+        android:layout_height="30dp"
         android:id="@+id/space_2"
         android:layout_below="@+id/space_1"
         android:layout_marginTop="5dp"
@@ -51,7 +51,7 @@
 
     <TextView
         android:gravity="end"
-        android:textSize="12sp"
+        android:textSize="15sp"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
 
@@ -65,7 +65,7 @@
         android:layout_alignTop="@+id/space_2" />
 
     <EditText
-        android:textSize="12sp"
+        android:textSize="15sp"
         android:id="@+id/person_password_edit"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
@@ -81,7 +81,7 @@
 
     <Space
         android:layout_width="5dp"
-        android:layout_height="15dp"
+        android:layout_height="30dp"
         android:id="@+id/space_3"
         android:layout_below="@+id/space_2"
         android:layout_marginTop="5dp"
@@ -89,7 +89,7 @@
 
     <TextView
         android:gravity="end"
-        android:textSize="12sp"
+        android:textSize="15sp"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
 
@@ -103,7 +103,7 @@
         android:layout_alignTop="@+id/space_3" />
 
     <EditText
-        android:textSize="12sp"
+        android:textSize="15sp"
         android:id="@+id/person_first_name_edit"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
@@ -119,7 +119,7 @@
 
     <Space
         android:layout_width="5dp"
-        android:layout_height="15dp"
+        android:layout_height="30dp"
         android:id="@+id/space_4"
         android:layout_below="@+id/space_3"
         android:layout_marginTop="5dp"
@@ -127,7 +127,7 @@
 
     <TextView
         android:gravity="end"
-        android:textSize="12sp"
+        android:textSize="15sp"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
 
@@ -141,7 +141,7 @@
         android:layout_alignTop="@+id/space_4" />
 
     <EditText
-        android:textSize="12sp"
+        android:textSize="15sp"
         android:id="@+id/person_last_name_edit"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
@@ -157,7 +157,7 @@
 
     <Space
         android:layout_width="5dp"
-        android:layout_height="15dp"
+        android:layout_height="30dp"
         android:id="@+id/space_5"
         android:layout_below="@+id/space_4"
         android:layout_marginTop="5dp"
@@ -165,7 +165,7 @@
 
     <TextView
         android:gravity="end"
-        android:textSize="12sp"
+        android:textSize="15sp"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
 
@@ -179,7 +179,7 @@
         android:layout_alignTop="@+id/space_5" />
 
     <EditText
-        android:textSize="12sp"
+        android:textSize="15sp"
         android:id="@+id/person_gender_edit"
         android:layout_width="wrap_content"
         android:layout_height="30dp"

@@ -7,14 +7,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioGroup;
-import android.widget.Toast;
 
 import mitso.v.homework_12.R;
+import mitso.v.homework_12.constants.Constants;
 import mitso.v.homework_12.fragments_menu.database.DatabaseHelper;
 
 public class SettingsFragment extends Fragment {
 
-    private String SORT_DATABASE_BY = "";
+    private String sortDatabaseBy = "";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -25,25 +25,20 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
-                    case R.id.sortByLogin:
-                        SORT_DATABASE_BY = DatabaseHelper.PERSON_LOGIN;
-                        Toast.makeText(getContext(), SORT_DATABASE_BY, Toast.LENGTH_SHORT).show();
+                    case R.id.rb_sortByLogin_SF:
+                        sortDatabaseBy = DatabaseHelper.PERSON_LOGIN;
                         break;
-                    case R.id.sortByPassword:
-                        SORT_DATABASE_BY = DatabaseHelper.PERSON_PASSWORD;
-                        Toast.makeText(getContext(), SORT_DATABASE_BY, Toast.LENGTH_SHORT).show();
+                    case R.id.rb_sortByPassword_SF:
+                        sortDatabaseBy = DatabaseHelper.PERSON_PASSWORD;
                         break;
-                    case R.id.sortByFirstName:
-                        SORT_DATABASE_BY = DatabaseHelper.PERSON_FIRST_NAME;
-                        Toast.makeText(getContext(), SORT_DATABASE_BY, Toast.LENGTH_SHORT).show();
+                    case R.id.rb_sortByFirstName_SF:
+                        sortDatabaseBy = DatabaseHelper.PERSON_FIRST_NAME;
                         break;
-                    case R.id.sortByLastName:
-                        SORT_DATABASE_BY = DatabaseHelper.PERSON_LAST_NAME;
-                        Toast.makeText(getContext(), SORT_DATABASE_BY, Toast.LENGTH_SHORT).show();
+                    case R.id.rb_sortByLastName_SF:
+                        sortDatabaseBy = DatabaseHelper.PERSON_LAST_NAME;
                         break;
-                    case R.id.sortByGender:
-                        SORT_DATABASE_BY = DatabaseHelper.PERSON_GENDER;
-                        Toast.makeText(getContext(), SORT_DATABASE_BY, Toast.LENGTH_SHORT).show();
+                    case R.id.rb_sortByGender_SF:
+                        sortDatabaseBy = DatabaseHelper.PERSON_GENDER;
                         break;
                 }
             }
@@ -53,11 +48,10 @@ public class SettingsFragment extends Fragment {
     }
 
     private void savePreference() {
-        SharedPreferences sPref = getActivity().getPreferences(0x0000);
+        SharedPreferences sPref = getActivity().getPreferences(Constants.PREFERENCES_PRIVATE_MODE);
         SharedPreferences.Editor ed = sPref.edit();
-        ed.putString("sort by", SORT_DATABASE_BY);
+        ed.putString(Constants.SAVED_SORT_BY_KEY, sortDatabaseBy);
         ed.apply();
-        Toast.makeText(getContext(), SORT_DATABASE_BY, Toast.LENGTH_SHORT).show();
     }
 
     @Override

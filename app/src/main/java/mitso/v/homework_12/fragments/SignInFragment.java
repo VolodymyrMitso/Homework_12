@@ -19,6 +19,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import mitso.v.homework_12.R;
+import mitso.v.homework_12.constants.Constants;
 import mitso.v.homework_12.interfaces.EventHandler;
 import mitso.v.homework_12.models.Person;
 
@@ -129,10 +130,10 @@ public class SignInFragment extends Fragment {
     }
 
     public ArrayList<Person> loadList() {
-        SharedPreferences sPref = getActivity().getPreferences(0x0000);
+        SharedPreferences sPref = getActivity().getPreferences(Constants.PREFERENCES_PRIVATE_MODE);
         List<Person> persons;
-        if (sPref.contains("list")) {
-            String jsonFavorites = sPref.getString("list", null);
+        if (sPref.contains(Constants.SAVED_LIST_KEY)) {
+            String jsonFavorites = sPref.getString(Constants.SAVED_LIST_KEY, null);
             Gson gson = new Gson();
             Person[] personsArray = gson.fromJson(jsonFavorites,
                     Person[].class);

@@ -8,38 +8,36 @@
     android:id="@+id/person_card_edit">
 
     <Space
-        android:layout_width="5dp"
-        android:layout_height="30dp"
+        android:layout_width="@dimen/d_size_5dp"
+        android:layout_height="@dimen/d_size_30dp"
         android:id="@+id/space_1"
         android:layout_centerHorizontal="true" />
 
     <TextView
-        android:gravity="end"
-        android:textSize="15sp"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
+        style="@style/stl_textView_Key_PC"
+
+        android:text="@string/s_login_PC"
+        android:textSize="@dimen/d_textSize_15sp"
+
         android:layout_alignParentTop="true"
+        android:layout_toStartOf="@+id/space_1"
         android:layout_toLeftOf="@+id/space_1"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignBottom="@+id/space_1"
-        android:text="PERSON_LOGIN:"
-        android:background="@android:color/darker_gray"
-        android:textColor="@android:color/black"/>
+        android:layout_alignBottom="@+id/space_1"/>
 
     <EditText
-        android:textSize="15sp"
-        android:id="@+id/person_login_edit"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
+        style="@style/stl_textView_Value_PC"
+
+        android:id="@+id/et_PersonLogin_PC"
+        android:textSize="@dimen/d_textSize_15sp"
+
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_toRightOf="@+id/space_1"
         android:layout_toEndOf="@+id/space_1"
-        android:layout_alignBottom="@+id/space_1"
-        android:textColor="@android:color/black"
-        android:background="@android:color/holo_blue_light"/>
+        android:layout_alignBottom="@+id/space_1"/>
 
     <Space
         android:layout_width="5dp"
@@ -50,33 +48,30 @@
         android:layout_centerHorizontal="true" />
 
     <TextView
-        android:gravity="end"
-        android:textSize="15sp"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
+        style="@style/stl_textView_Key_PC"
+
+        android:text="@string/s_password_PC"
+        android:textSize="@dimen/d_textSize_15sp"
 
         android:layout_toLeftOf="@+id/space_2"
+        android:layout_toStartOf="@+id/space_2"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignBottom="@+id/space_2"
-        android:text="PERSON_PASSWORD:"
-        android:background="@android:color/darker_gray"
-        android:textColor="@android:color/black"
+
         android:layout_alignTop="@+id/space_2" />
 
     <EditText
-        android:textSize="15sp"
-        android:id="@+id/person_password_edit"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
+        style="@style/stl_textView_Value_PC"
+
+        android:id="@+id/et_PersonPassword_PC"
+        android:textSize="@dimen/d_textSize_15sp"
 
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_toRightOf="@+id/space_2"
         android:layout_toEndOf="@+id/space_2"
         android:layout_alignBottom="@+id/space_2"
-        android:textColor="@android:color/black"
-        android:background="@android:color/holo_blue_light"
         android:layout_alignTop="@+id/space_2" />
 
     <Space
@@ -88,33 +83,29 @@
         android:layout_centerHorizontal="true" />
 
     <TextView
-        android:gravity="end"
-        android:textSize="15sp"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
+        style="@style/stl_textView_Key_PC"
+
+        android:text="@string/s_firstName_PC"
+        android:textSize="@dimen/d_textSize_15sp"
 
         android:layout_toLeftOf="@+id/space_3"
+        android:layout_toStartOf="@+id/space_3"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignBottom="@+id/space_3"
-        android:text="PERSON_FIRST_NAME:"
-        android:background="@android:color/darker_gray"
-        android:textColor="@android:color/black"
         android:layout_alignTop="@+id/space_3" />
 
     <EditText
-        android:textSize="15sp"
-        android:id="@+id/person_first_name_edit"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
+        style="@style/stl_textView_Value_PC"
+
+        android:id="@+id/et_personFirstName_PC"
+        android:textSize="@dimen/d_textSize_15sp"
 
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_toRightOf="@+id/space_3"
         android:layout_toEndOf="@+id/space_3"
         android:layout_alignBottom="@+id/space_3"
-        android:textColor="@android:color/black"
-        android:background="@android:color/holo_blue_light"
         android:layout_alignTop="@+id/space_3" />
 
     <Space
@@ -126,33 +117,29 @@
         android:layout_centerHorizontal="true" />
 
     <TextView
-        android:gravity="end"
-        android:textSize="15sp"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
+        style="@style/stl_textView_Key_PC"
+
+        android:text="@string/s_lastName_PC"
+        android:textSize="@dimen/d_textSize_15sp"
 
         android:layout_toLeftOf="@+id/space_4"
+        android:layout_toStartOf="@+id/space_4"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignBottom="@+id/space_4"
-        android:text="PERSON_LAST_NAME:"
-        android:background="@android:color/darker_gray"
-        android:textColor="@android:color/black"
         android:layout_alignTop="@+id/space_4" />
 
     <EditText
-        android:textSize="15sp"
-        android:id="@+id/person_last_name_edit"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
+        style="@style/stl_textView_Value_PC"
+
+        android:id="@+id/et_personLastName_PC"
+        android:textSize="@dimen/d_textSize_15sp"
 
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_toRightOf="@+id/space_4"
         android:layout_toEndOf="@+id/space_4"
         android:layout_alignBottom="@+id/space_4"
-        android:textColor="@android:color/black"
-        android:background="@android:color/holo_blue_light"
         android:layout_alignTop="@+id/space_4" />
 
     <Space
@@ -164,32 +151,28 @@
         android:layout_centerHorizontal="true" />
 
     <TextView
-        android:gravity="end"
-        android:textSize="15sp"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
+        style="@style/stl_textView_Key_PC"
+
+        android:text="@string/s_gender_PC"
+        android:textSize="@dimen/d_textSize_15sp"
 
         android:layout_toLeftOf="@+id/space_5"
+        android:layout_toStartOf="@+id/space_5"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignBottom="@+id/space_5"
-        android:text="PERSON_GENDER:"
-        android:background="@android:color/darker_gray"
-        android:textColor="@android:color/black"
         android:layout_alignTop="@+id/space_5" />
 
     <EditText
-        android:textSize="15sp"
-        android:id="@+id/person_gender_edit"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
+        style="@style/stl_textView_Value_PC"
+
+        android:id="@+id/et_personGender_PC"
+        android:textSize="@dimen/d_textSize_15sp"
 
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_toRightOf="@+id/space_5"
         android:layout_toEndOf="@+id/space_5"
         android:layout_alignBottom="@+id/space_5"
-        android:textColor="@android:color/black"
-        android:background="@android:color/holo_blue_light"
         android:layout_alignTop="@+id/space_5" />
 </RelativeLayout>

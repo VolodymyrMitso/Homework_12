@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements EventHandler {
                     .beginTransaction()
                     .replace(R.id.fl_FragmentContainer_AM, signInFragment, Constants.SIGN_IN_FRAGMENT_TAG)
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+//                    .addToBackStack(Constants.SIGN_IN_FRAGMENT_TAG)
                     .commit();
             signInFragment.setEventHandler(this);
     }
@@ -137,7 +138,10 @@ public class MainActivity extends AppCompatActivity implements EventHandler {
     @Override
     public void onBackPressed() {
         if (getSupportFragmentManager().getBackStackEntryCount() >= 1) {
-            commitSignInFragment();
+            if (getSupportFragmentManager().findFragmentById(R.id.fl_FragmentContainer_AM) instanceof SignInFragment)
+                finish();
+            else
+                commitSignInFragment();
         } else {
             super.onBackPressed();
         }
@@ -157,25 +161,25 @@ public class MainActivity extends AppCompatActivity implements EventHandler {
             case R.id.mi_Settings:
                 getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.fl_FragmentContainer_AM, new SettingsFragment(), "settings tag")
+                        .replace(R.id.fl_FragmentContainer_AM, new SettingsFragment(), Constants.SETTINGS_FRAGMENT_TAG)
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                        .addToBackStack("settings tag")
+                        .addToBackStack(Constants.SETTINGS_FRAGMENT_TAG)
                         .commit();
                 return true;
             case R.id.mi_ShowUsers:
                 getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.fl_FragmentContainer_AM, new ShowUsersFragment(), "show users tag")
+                        .replace(R.id.fl_FragmentContainer_AM, new ShowUsersFragment(), Constants.SHOW_USERS_FRAGMENT_TAG)
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                        .addToBackStack("show users tag")
+                        .addToBackStack(Constants.SHOW_USERS_FRAGMENT_TAG)
                         .commit();
                 return true;
             case R.id.mi_About:
                 getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.fl_FragmentContainer_AM, new AboutFragment(), "about tag")
+                        .replace(R.id.fl_FragmentContainer_AM, new AboutFragment(), Constants.ABOUT_FRAGMENT_TAG)
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                        .addToBackStack("about tag")
+                        .addToBackStack(Constants.ABOUT_FRAGMENT_TAG)
                         .commit();
                 return true;
             default:
@@ -188,15 +192,15 @@ public class MainActivity extends AppCompatActivity implements EventHandler {
         SharedPreferences.Editor ed = sPref.edit();
         Gson gson = new Gson();
         String jsonPersons = gson.toJson(persons);
-        ed.putString("list", jsonPersons);
+        ed.putString(Constants.SAVED_LIST_KEY, jsonPersons);
         ed.apply();
     }
 
     public ArrayList<Person> loadList() {
-        SharedPreferences sPref = getPreferences(MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getPreferences(MODE_PRIVATE);
         List<Person> persons;
-        if (sPref.contains("list")) {
-            String jsonFavorites = sPref.getString("list", null);
+        if (sharedPreferences.contains(Constants.SAVED_LIST_KEY)) {
+            String jsonFavorites = sharedPreferences.getString(Constants.SAVED_LIST_KEY, null);
             Gson gson = new Gson();
             Person[] personsArray = gson.fromJson(jsonFavorites,
                     Person[].class);

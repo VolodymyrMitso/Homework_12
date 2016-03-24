@@ -17,4 +17,27 @@
 
         <item name="android:maxLength">15</item>
     </style>
+
+    <style name="stl_textView_Key_PC">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@color/c_bg_key</item>
+
+        <item name="android:textSize">@dimen/d_textSize_12sp</item>
+        <item name="android:textColor">@color/c_text_key</item>
+        <item name="android:gravity">end|center_vertical</item>
+        <item name="android:paddingRight">@dimen/d_size_5dp</item>
+    </style>
+
+    <style name="stl_textView_Value_PC">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@color/c_bg_value</item>
+
+        <item name="android:textSize">@dimen/d_textSize_12sp</item>
+        <item name="android:textColor">@color/c_text_value</item>
+        <item name="android:gravity">start|center_vertical</item>
+        <item name="android:paddingLeft">@dimen/d_size_5dp</item>
+    </style>
 </resources>
+

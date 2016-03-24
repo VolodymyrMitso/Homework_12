@@ -18,7 +18,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String PERSON_LAST_NAME = "PERSON_LAST_NAME";
     public static final String PERSON_GENDER = "PERSON_GENDER";
 
-
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -36,6 +35,5 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
     }
 }

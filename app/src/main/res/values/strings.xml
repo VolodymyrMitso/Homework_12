@@ -45,4 +45,23 @@
 
     <string name="s_loadFromAsset">load from asset</string>
     <string name="s_loadFromRaw">load from raw</string>
+
+    <string name="s_edit">Edit</string>
+    <string name="s_delete">Delete</string>
+    <string name="s_editOrDelete">Edit / Delete</string>
+
+    <string name="s_login_PC">person login:</string>
+    <string name="s_password_PC">person password:</string>
+    <string name="s_firstName_PC">person first name:</string>
+    <string name="s_lastName_PC">person last name:</string>
+    <string name="s_gender_PC">person gender:</string>
+    <string name="s_databaseId_PC">database id:</string>
+
+    <string name="s_sortBy">Sort database by:</string>
+
+    <string name="s_login_SF">login</string>
+    <string name="s_password_SF">password</string>
+    <string name="s_firstName_SF">first name</string>
+    <string name="s_lastName_SF">last name</string>
+    <string name="s_gender_SF">gender</string>
 </resources>

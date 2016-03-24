@@ -21,8 +21,8 @@ public class AboutFragment extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.about_fragment, container, false);
 
-        Button mButton_LoadFromAsset = (Button) view.findViewById(R.id.btn_LoadFromAsset);
-        Button mButton_LoadFromRaw = (Button) view.findViewById(R.id.btn_LoadFromRaw);
+        Button mButton_LoadFromAsset = (Button) view.findViewById(R.id.btn_LoadFromAsset_AF);
+        Button mButton_LoadFromRaw = (Button) view.findViewById(R.id.btn_LoadFromRaw_AF);
 
         mTextView_ShowField = (TextView) view.findViewById(R.id.tv_showField_AF);
 

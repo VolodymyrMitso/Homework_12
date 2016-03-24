@@ -22,6 +22,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import mitso.v.homework_12.R;
+import mitso.v.homework_12.constants.Constants;
 import mitso.v.homework_12.models.Person;
 
 public class ShowUsersFragment extends ListFragment {
@@ -117,52 +118,53 @@ public class ShowUsersFragment extends ListFragment {
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
 
-        Cursor cursor = (Cursor) l.getItemAtPosition(position);
+        Cursor mCursor_OnClick = (Cursor) l.getItemAtPosition(position);
 
-        final String personLogin = cursor.getString(cursor.getColumnIndex(DatabaseHelper.PERSON_LOGIN));
-        final String personPassword = cursor.getString(cursor.getColumnIndex(DatabaseHelper.PERSON_PASSWORD));
-        final String personFirstName = cursor.getString(cursor.getColumnIndex(DatabaseHelper.PERSON_FIRST_NAME));
-        final String personLastName = cursor.getString(cursor.getColumnIndex(DatabaseHelper.PERSON_LAST_NAME));
-        final String personGender = cursor.getString(cursor.getColumnIndex(DatabaseHelper.PERSON_GENDER));
+        final String mString_PersonLogin = mCursor_OnClick.getString(mCursor_OnClick.getColumnIndex(DatabaseHelper.PERSON_LOGIN));
+        final String mString_PersonPassword = mCursor_OnClick.getString(mCursor_OnClick.getColumnIndex(DatabaseHelper.PERSON_PASSWORD));
+        final String mString_PersonFirstName = mCursor_OnClick.getString(mCursor_OnClick.getColumnIndex(DatabaseHelper.PERSON_FIRST_NAME));
+        final String mString_PersonLastName = mCursor_OnClick.getString(mCursor_OnClick.getColumnIndex(DatabaseHelper.PERSON_LAST_NAME));
+        final String mString_PersonGender = mCursor_OnClick.getString(mCursor_OnClick.getColumnIndex(DatabaseHelper.PERSON_GENDER));
 
-        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
-        alertDialog.setTitle("Edit / Delete");
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-        RelativeLayout relativeLayout = (RelativeLayout) inflater.inflate(R.layout.person_card_edit, null);
-        alertDialog.setView(relativeLayout);
+        AlertDialog.Builder mAlertDialog = new AlertDialog.Builder(getContext());
+        mAlertDialog.setTitle(R.string.s_editOrDelete);
+        LayoutInflater mInflater = getActivity().getLayoutInflater();
+        RelativeLayout mRelativeLayout_PersonCard = (RelativeLayout) mInflater.inflate(R.layout.person_card_edit, null);
+        mAlertDialog.setView(mRelativeLayout_PersonCard);
 
-        final EditText personLoginEdit = (EditText) relativeLayout.findViewById(R.id.person_login_edit);
-        final EditText personPasswordEdit = (EditText) relativeLayout.findViewById(R.id.person_password_edit);
-        final EditText personFirstNameEdit = (EditText) relativeLayout.findViewById(R.id.person_first_name_edit);
-        final EditText personLastNameEdit = (EditText) relativeLayout.findViewById(R.id.person_last_name_edit);
-        final EditText personGenderEdit = (EditText) relativeLayout.findViewById(R.id.person_gender_edit);
+        final EditText mEditText_PersonLogin = (EditText) mRelativeLayout_PersonCard.findViewById(R.id.et_PersonLogin_PC);
+        final EditText mEditText_PersonPassword = (EditText) mRelativeLayout_PersonCard.findViewById(R.id.et_PersonPassword_PC);
+        final EditText mEditText_PersonFirstName = (EditText) mRelativeLayout_PersonCard.findViewById(R.id.et_personFirstName_PC);
+        final EditText mEditText_PersonLastName = (EditText) mRelativeLayout_PersonCard.findViewById(R.id.et_personLastName_PC);
+        final EditText mEditText_PersonGender = (EditText) mRelativeLayout_PersonCard.findViewById(R.id.et_personGender_PC);
 
-        personLoginEdit.setText(personLogin);
-        personPasswordEdit.setText(personPassword);
-        personFirstNameEdit.setText(personFirstName);
-        personLastNameEdit.setText(personLastName);
-        personGenderEdit.setText(personGender);
+        mEditText_PersonLogin.setText(mString_PersonLogin);
+        mEditText_PersonPassword.setText(mString_PersonPassword);
+        mEditText_PersonFirstName.setText(mString_PersonFirstName);
+        mEditText_PersonLastName.setText(mString_PersonLastName);
+        mEditText_PersonGender.setText(mString_PersonGender);
 
         final long finalID = id;
 
-        alertDialog.setNegativeButton("Edit", new DialogInterface.OnClickListener() {
+        mAlertDialog.setNegativeButton(R.string.s_edit, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface arg0, int arg1) {
 
-                ContentValues values = new ContentValues();
-                values.put(DatabaseHelper.PERSON_LOGIN, personLoginEdit.getText().toString());
-                values.put(DatabaseHelper.PERSON_PASSWORD, personPasswordEdit.getText().toString());
-                values.put(DatabaseHelper.PERSON_FIRST_NAME, personFirstNameEdit.getText().toString());
-                values.put(DatabaseHelper.PERSON_LAST_NAME, personLastNameEdit.getText().toString());
-                values.put(DatabaseHelper.PERSON_GENDER, personGenderEdit.getText().toString());
+                    ContentValues values = new ContentValues();
+                    values.put(DatabaseHelper.PERSON_LOGIN, mEditText_PersonLogin.getText().toString());
+                    values.put(DatabaseHelper.PERSON_PASSWORD, mEditText_PersonPassword.getText().toString());
+                    values.put(DatabaseHelper.PERSON_FIRST_NAME, mEditText_PersonFirstName.getText().toString());
+                    values.put(DatabaseHelper.PERSON_LAST_NAME, mEditText_PersonLastName.getText().toString());
+                    values.put(DatabaseHelper.PERSON_GENDER, mEditText_PersonGender.getText().toString());
 
-                mDatabaseHelper.getWritableDatabase().update(DatabaseHelper.DATABASE_TABLE,
-                        values, DatabaseHelper.KEY_ID + "=" + finalID, null);
+                    mDatabaseHelper.getWritableDatabase().update(DatabaseHelper.DATABASE_TABLE,
+                            values, DatabaseHelper.KEY_ID + "=" + finalID, null);
 
-                ((CursorAdapter) getListAdapter()).changeCursor(doQuery());
+                    ((CursorAdapter) getListAdapter()).changeCursor(doQuery());
+
             }
         });
 
-        alertDialog.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+        mAlertDialog.setPositiveButton(R.string.s_delete, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface arg0, int arg1) {
                 mDatabaseHelper.getWritableDatabase().delete(DatabaseHelper.DATABASE_TABLE,
                         DatabaseHelper.KEY_ID + "=" + finalID, null);
@@ -171,7 +173,7 @@ public class ShowUsersFragment extends ListFragment {
             }
         });
 
-        alertDialog.show();
+        mAlertDialog.show();
     }
 
     @Override
@@ -181,10 +183,10 @@ public class ShowUsersFragment extends ListFragment {
     }
 
     public ArrayList<Person> loadList() {
-        SharedPreferences sPref = getActivity().getPreferences(0x0000);
+        SharedPreferences sharedPreferences = getActivity().getPreferences(Constants.PREFERENCES_PRIVATE_MODE);
         List<Person> persons;
-        if (sPref.contains("list")) {
-            String jsonFavorites = sPref.getString("list", null);
+        if (sharedPreferences.contains(Constants.SAVED_LIST_KEY)) {
+            String jsonFavorites = sharedPreferences.getString(Constants.SAVED_LIST_KEY, null);
             Gson gson = new Gson();
             Person[] personsArray = gson.fromJson(jsonFavorites,
                     Person[].class);
@@ -196,23 +198,23 @@ public class ShowUsersFragment extends ListFragment {
     }
 
     public void saveList(ArrayList<Person> persons) {
-        SharedPreferences sPref = getActivity().getPreferences(0x0000);
-        SharedPreferences.Editor ed = sPref.edit();
+        SharedPreferences sharedPreferences = getActivity().getPreferences(Constants.PREFERENCES_PRIVATE_MODE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
         Gson gson = new Gson();
         String jsonPersons = gson.toJson(persons);
-        ed.putString("list", jsonPersons);
-        ed.apply();
+        editor.putString(Constants.SAVED_LIST_KEY, jsonPersons);
+        editor.apply();
     }
 
     private String sortBy() {
-        SharedPreferences sPref = getActivity().getPreferences(0x0000);
-        return sPref.getString("sort by", DatabaseHelper.KEY_ID);
+        SharedPreferences sPref = getActivity().getPreferences(Constants.PREFERENCES_PRIVATE_MODE);
+        return sPref.getString(Constants.SAVED_SORT_BY_KEY, DatabaseHelper.KEY_ID);
     }
 
     private ArrayList<Person> getDatabasePersons() {
         ArrayList<Person> databasePersons = new ArrayList<>();
 
-        Cursor cursor = mDatabaseHelper.getWritableDatabase().query(DatabaseHelper.DATABASE_TABLE, new String[]{
+        Cursor mCursor_CreateList = mDatabaseHelper.getWritableDatabase().query(DatabaseHelper.DATABASE_TABLE, new String[]{
                         DatabaseHelper.KEY_ID,
                         DatabaseHelper.PERSON_LOGIN,
                         DatabaseHelper.PERSON_PASSWORD,
@@ -221,16 +223,16 @@ public class ShowUsersFragment extends ListFragment {
                         DatabaseHelper.PERSON_GENDER},
                 null, null, null, null, null);
 
-        while (cursor.moveToNext()) {
-            String personLogin = cursor.getString(cursor.getColumnIndex(DatabaseHelper.PERSON_LOGIN));
-            String personPassword = cursor.getString(cursor.getColumnIndex(DatabaseHelper.PERSON_PASSWORD));
-            String personFirstName = cursor.getString(cursor.getColumnIndex(DatabaseHelper.PERSON_FIRST_NAME));
-            String personLastName = cursor.getString(cursor.getColumnIndex(DatabaseHelper.PERSON_LAST_NAME));
-            String personGender = cursor.getString(cursor.getColumnIndex(DatabaseHelper.PERSON_GENDER));
+        while (mCursor_CreateList.moveToNext()) {
+            String mString_PersonLogin = mCursor_CreateList.getString(mCursor_CreateList.getColumnIndex(DatabaseHelper.PERSON_LOGIN));
+            String mString_PersonPassword = mCursor_CreateList.getString(mCursor_CreateList.getColumnIndex(DatabaseHelper.PERSON_PASSWORD));
+            String mString_PersonFirstName = mCursor_CreateList.getString(mCursor_CreateList.getColumnIndex(DatabaseHelper.PERSON_FIRST_NAME));
+            String mString_PersonLastName = mCursor_CreateList.getString(mCursor_CreateList.getColumnIndex(DatabaseHelper.PERSON_LAST_NAME));
+            String mString_PersonGender = mCursor_CreateList.getString(mCursor_CreateList.getColumnIndex(DatabaseHelper.PERSON_GENDER));
 
-            databasePersons.add(new Person(personLogin, personPassword, personFirstName, personLastName, personGender));
+            databasePersons.add(new Person(mString_PersonLogin, mString_PersonPassword, mString_PersonFirstName, mString_PersonLastName, mString_PersonGender));
         }
-        cursor.close();
+        mCursor_CreateList.close();
 
         return databasePersons;
     }

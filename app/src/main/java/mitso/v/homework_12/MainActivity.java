@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements EventHandler {
         RegistrationDialogFragment dialog = new RegistrationDialogFragment();
         Bundle args = new Bundle();
 
-        if (MainSupport.personDataCheck(this, _login, _password, _firstName, _lastName, _gender)) {
+        if (MainSupport.personDataCheck(_login, _password, _firstName, _lastName, _gender)) {
             Person person = new Person();
             person.setLogin(_login);
             person.setPassword(_password);

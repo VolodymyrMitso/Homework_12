@@ -46,7 +46,7 @@ public class MainSupport {
         _alertDialog.show();
     }
 
-    public static boolean personDataCheck(Context c, String _login, String _password, String _firstName, String _lastName, String _gender) {
+    public static boolean personDataCheck(String _login, String _password, String _firstName, String _lastName, String _gender) {
         boolean result;
         if (_login.isEmpty()
                 || _password.isEmpty()

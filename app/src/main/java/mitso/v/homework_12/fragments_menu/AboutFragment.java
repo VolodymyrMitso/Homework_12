@@ -13,7 +13,7 @@ import java.io.InputStreamReader;
 
 import mitso.v.homework_12.R;
 
-public class AboutFragment extends BaseFragment {
+public class AboutFragment extends android.support.v4.app.Fragment {
 
     private TextView mTextView_ShowField;
 

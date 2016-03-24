@@ -1,4 +1,4 @@
-package mitso.v.homework_12.fragments_menu.data_base;
+package mitso.v.homework_12.fragments_menu.database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

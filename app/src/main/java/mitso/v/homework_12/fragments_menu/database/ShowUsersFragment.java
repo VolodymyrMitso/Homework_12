@@ -1,4 +1,4 @@
-package mitso.v.homework_12.fragments_menu.data_base;
+package mitso.v.homework_12.fragments_menu.database;
 
 import android.content.ContentValues;
 import android.content.DialogInterface;
@@ -87,7 +87,7 @@ public class ShowUsersFragment extends ListFragment {
                                 DatabaseHelper.PERSON_FIRST_NAME,
                                 DatabaseHelper.PERSON_LAST_NAME,
                                 DatabaseHelper.PERSON_GENDER },
-                        null, null, null, null, DatabaseHelper.KEY_ID);
+                        null, null, null, null, sortBy());
     }
 
     private void checkList() {
@@ -204,17 +204,22 @@ public class ShowUsersFragment extends ListFragment {
         ed.apply();
     }
 
+    private String sortBy() {
+        SharedPreferences sPref = getActivity().getPreferences(0x0000);
+        return sPref.getString("sort by", DatabaseHelper.KEY_ID);
+    }
+
     private ArrayList<Person> getDatabasePersons() {
         ArrayList<Person> databasePersons = new ArrayList<>();
 
-        Cursor cursor = mDatabaseHelper.getWritableDatabase().query(DatabaseHelper.DATABASE_TABLE, new String[] {
+        Cursor cursor = mDatabaseHelper.getWritableDatabase().query(DatabaseHelper.DATABASE_TABLE, new String[]{
                         DatabaseHelper.KEY_ID,
                         DatabaseHelper.PERSON_LOGIN,
                         DatabaseHelper.PERSON_PASSWORD,
                         DatabaseHelper.PERSON_FIRST_NAME,
                         DatabaseHelper.PERSON_LAST_NAME,
                         DatabaseHelper.PERSON_GENDER},
-                null, null, null, null, DatabaseHelper.KEY_ID);
+                null, null, null, null, null);
 
         while (cursor.moveToNext()) {
             String personLogin = cursor.getString(cursor.getColumnIndex(DatabaseHelper.PERSON_LOGIN));

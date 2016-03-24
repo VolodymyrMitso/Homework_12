@@ -15,14 +15,12 @@ import java.util.Arrays;
 import java.util.List;
 
 import mitso.v.homework_12.constants.Constants;
-import mitso.v.homework_12.fragments.DataHeadlessFragment;
 import mitso.v.homework_12.fragments.RegistrationDialogFragment;
 import mitso.v.homework_12.fragments.RegistrationFragment;
 import mitso.v.homework_12.fragments.SignInFragment;
 import mitso.v.homework_12.fragments_menu.AboutFragment;
-import mitso.v.homework_12.fragments_menu.BaseFragment;
 import mitso.v.homework_12.fragments_menu.SettingsFragment;
-import mitso.v.homework_12.fragments_menu.data_base.ShowUsersFragment;
+import mitso.v.homework_12.fragments_menu.database.ShowUsersFragment;
 import mitso.v.homework_12.interfaces.EventHandler;
 import mitso.v.homework_12.models.Person;
 
@@ -35,10 +33,8 @@ public class MainActivity extends AppCompatActivity implements EventHandler {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         persons = loadList();
-        if (savedInstanceState == null) {
+        if (savedInstanceState == null)
             commitSignInFragment();
-            commitHeadlessFragment();
-        }
     }
 
     private void commitSignInFragment() {
@@ -49,18 +45,6 @@ public class MainActivity extends AppCompatActivity implements EventHandler {
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .commit();
         signInFragment.setEventHandler(this);
-    }
-
-    private void commitHeadlessFragment() {
-        DataHeadlessFragment dataHeadlessFragment = new DataHeadlessFragment();
-        getSupportFragmentManager()
-                .beginTransaction()
-                .add(dataHeadlessFragment, Constants.HEADLESS_FRAGMENT_TAG)
-                .commit();
-    }
-
-    public DataHeadlessFragment getDataFragment () {
-        return (DataHeadlessFragment) getSupportFragmentManager().findFragmentByTag(Constants.HEADLESS_FRAGMENT_TAG);
     }
 
     @Override
@@ -172,7 +156,11 @@ public class MainActivity extends AppCompatActivity implements EventHandler {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.mi_Settings:
-                updateFragment(new SettingsFragment());
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fl_FragmentContainer_AM, new SettingsFragment())
+                        .addToBackStack(null)
+                        .commitAllowingStateLoss();
                 return true;
             case R.id.mi_ShowUsers:
                 getSupportFragmentManager()
@@ -182,19 +170,15 @@ public class MainActivity extends AppCompatActivity implements EventHandler {
                         .commitAllowingStateLoss();
                 return true;
             case R.id.mi_About:
-                updateFragment(new AboutFragment());
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fl_FragmentContainer_AM, new AboutFragment())
+                        .addToBackStack(null)
+                        .commitAllowingStateLoss();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-
-    private void updateFragment(BaseFragment baseFragment) {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fl_FragmentContainer_AM, baseFragment)
-                .addToBackStack(null)
-                .commitAllowingStateLoss();
     }
 
     public void saveList(ArrayList<Person> persons) {

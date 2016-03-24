@@ -7,11 +7,21 @@
 
     android:id="@+id/person_card_edit">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:text="@string/s_warning_PC"
+        android:textColor="@color/c_warning"
+        android:gravity="center"
+        android:id="@+id/warning"/>
+
     <Space
         android:layout_width="@dimen/d_size_5dp"
         android:layout_height="@dimen/d_size_30dp"
         android:id="@+id/space_1"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:layout_below="@id/warning"/>
 
     <TextView
         style="@style/stl_textView_Key_PC"
@@ -19,12 +29,12 @@
         android:text="@string/s_login_PC"
         android:textSize="@dimen/d_textSize_15sp"
 
-        android:layout_alignParentTop="true"
         android:layout_toStartOf="@+id/space_1"
         android:layout_toLeftOf="@+id/space_1"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignBottom="@+id/space_1"/>
+        android:layout_alignBottom="@+id/space_1"
+        android:layout_alignTop="@+id/space_1" />
 
     <EditText
         style="@style/stl_textView_Value_PC"
@@ -32,12 +42,12 @@
         android:id="@+id/et_PersonLogin_PC"
         android:textSize="@dimen/d_textSize_15sp"
 
-        android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_toRightOf="@+id/space_1"
         android:layout_toEndOf="@+id/space_1"
-        android:layout_alignBottom="@+id/space_1"/>
+        android:layout_alignBottom="@+id/space_1"
+        android:layout_alignTop="@+id/space_1" />
 
     <Space
         android:layout_width="5dp"

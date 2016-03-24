@@ -129,8 +129,8 @@ public class SignInFragment extends Fragment {
         mEventHandler = null;
     }
 
-    public ArrayList<Person> loadList() {
-        SharedPreferences sPref = getActivity().getPreferences(Constants.PREFERENCES_PRIVATE_MODE);
+    private ArrayList<Person> loadList() {
+        SharedPreferences sPref = getActivity().getPreferences(getContext().MODE_PRIVATE);
         List<Person> persons;
         if (sPref.contains(Constants.SAVED_LIST_KEY)) {
             String jsonFavorites = sPref.getString(Constants.SAVED_LIST_KEY, null);

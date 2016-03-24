@@ -57,6 +57,8 @@
     <string name="s_gender_PC">person gender:</string>
     <string name="s_databaseId_PC">database id:</string>
 
+    <string name="s_warning_PC">ATTENTION:\nAll fields must be filled.\nGender only [MALE] or [FEMALE].\nOtherwise edit will be canceled.</string>
+
     <string name="s_sortBy">Sort database by:</string>
 
     <string name="s_login_SF">login</string>
@@ -64,4 +66,6 @@
     <string name="s_firstName_SF">first name</string>
     <string name="s_lastName_SF">last name</string>
     <string name="s_gender_SF">gender</string>
+
+    <string name="s_edit_failure">EDIT FAILURE</string>
 </resources>

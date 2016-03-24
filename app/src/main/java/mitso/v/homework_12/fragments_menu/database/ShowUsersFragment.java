@@ -149,18 +149,28 @@ public class ShowUsersFragment extends ListFragment {
         mAlertDialog.setNegativeButton(R.string.s_edit, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface arg0, int arg1) {
 
-                    ContentValues values = new ContentValues();
-                    values.put(DatabaseHelper.PERSON_LOGIN, mEditText_PersonLogin.getText().toString());
-                    values.put(DatabaseHelper.PERSON_PASSWORD, mEditText_PersonPassword.getText().toString());
-                    values.put(DatabaseHelper.PERSON_FIRST_NAME, mEditText_PersonFirstName.getText().toString());
-                    values.put(DatabaseHelper.PERSON_LAST_NAME, mEditText_PersonLastName.getText().toString());
-                    values.put(DatabaseHelper.PERSON_GENDER, mEditText_PersonGender.getText().toString());
+                if (ShowUsersSupport.personDataCheck(getContext(),
+                        mEditText_PersonLogin.getText().toString(),
+                        mEditText_PersonPassword.getText().toString(),
+                        mEditText_PersonFirstName.getText().toString(),
+                        mEditText_PersonLastName.getText().toString(),
+                        mEditText_PersonGender.getText().toString())) {
 
-                    mDatabaseHelper.getWritableDatabase().update(DatabaseHelper.DATABASE_TABLE,
-                            values, DatabaseHelper.KEY_ID + "=" + finalID, null);
+                    if (ShowUsersSupport.checkGender(getContext(), mEditText_PersonGender.getText().toString())) {
 
-                    ((CursorAdapter) getListAdapter()).changeCursor(doQuery());
+                        ContentValues values = new ContentValues();
+                        values.put(DatabaseHelper.PERSON_LOGIN, mEditText_PersonLogin.getText().toString());
+                        values.put(DatabaseHelper.PERSON_PASSWORD, mEditText_PersonPassword.getText().toString());
+                        values.put(DatabaseHelper.PERSON_FIRST_NAME, mEditText_PersonFirstName.getText().toString());
+                        values.put(DatabaseHelper.PERSON_LAST_NAME, mEditText_PersonLastName.getText().toString());
+                        values.put(DatabaseHelper.PERSON_GENDER, mEditText_PersonGender.getText().toString());
 
+                        mDatabaseHelper.getWritableDatabase().update(DatabaseHelper.DATABASE_TABLE,
+                                values, DatabaseHelper.KEY_ID + "=" + finalID, null);
+
+                        ((CursorAdapter) getListAdapter()).changeCursor(doQuery());
+                    }
+                }
             }
         });
 
@@ -182,8 +192,8 @@ public class ShowUsersFragment extends ListFragment {
         saveList(getDatabasePersons());
     }
 
-    public ArrayList<Person> loadList() {
-        SharedPreferences sharedPreferences = getActivity().getPreferences(Constants.PREFERENCES_PRIVATE_MODE);
+    private ArrayList<Person> loadList() {
+        SharedPreferences sharedPreferences = getActivity().getPreferences(getContext().MODE_PRIVATE);
         List<Person> persons;
         if (sharedPreferences.contains(Constants.SAVED_LIST_KEY)) {
             String jsonFavorites = sharedPreferences.getString(Constants.SAVED_LIST_KEY, null);
@@ -197,8 +207,8 @@ public class ShowUsersFragment extends ListFragment {
         return (ArrayList<Person>) persons;
     }
 
-    public void saveList(ArrayList<Person> persons) {
-        SharedPreferences sharedPreferences = getActivity().getPreferences(Constants.PREFERENCES_PRIVATE_MODE);
+    private void saveList(ArrayList<Person> persons) {
+        SharedPreferences sharedPreferences = getActivity().getPreferences(getContext().MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         Gson gson = new Gson();
         String jsonPersons = gson.toJson(persons);
@@ -207,7 +217,7 @@ public class ShowUsersFragment extends ListFragment {
     }
 
     private String sortBy() {
-        SharedPreferences sPref = getActivity().getPreferences(Constants.PREFERENCES_PRIVATE_MODE);
+        SharedPreferences sPref = getActivity().getPreferences(getContext().MODE_PRIVATE);
         return sPref.getString(Constants.SAVED_SORT_BY_KEY, DatabaseHelper.KEY_ID);
     }
 

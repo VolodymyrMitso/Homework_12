@@ -48,7 +48,7 @@ public class SettingsFragment extends Fragment {
     }
 
     private void savePreference() {
-        SharedPreferences sPref = getActivity().getPreferences(Constants.PREFERENCES_PRIVATE_MODE);
+        SharedPreferences sPref = getActivity().getPreferences(getContext().MODE_PRIVATE);
         SharedPreferences.Editor ed = sPref.edit();
         ed.putString(Constants.SAVED_SORT_BY_KEY, sortDatabaseBy);
         ed.apply();

@@ -12,9 +12,6 @@ public final class Constants {
     public static final String SHOW_USERS_FRAGMENT_TAG = "SHOW_USERS_FRAGMENT_TAG";
     public static final String ABOUT_FRAGMENT_TAG = "ABOUT_FRAGMENT_TAG";
 
-
-    public static final int PREFERENCES_PRIVATE_MODE = 0x0000;
-
     public static final String SAVED_LIST_KEY = "SAVED_LIST_KEY";
     public static final String SAVED_SORT_BY_KEY = "SAVED_SORT_BY_KEY";
 }

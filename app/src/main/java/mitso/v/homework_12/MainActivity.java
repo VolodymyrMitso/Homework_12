@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity implements EventHandler {
                     .beginTransaction()
                     .replace(R.id.fl_FragmentContainer_AM, signInFragment, Constants.SIGN_IN_FRAGMENT_TAG)
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-//                    .addToBackStack(Constants.SIGN_IN_FRAGMENT_TAG)
                     .commit();
             signInFragment.setEventHandler(this);
     }
@@ -147,8 +146,6 @@ public class MainActivity extends AppCompatActivity implements EventHandler {
         }
     }
 
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
@@ -187,7 +184,7 @@ public class MainActivity extends AppCompatActivity implements EventHandler {
         }
     }
 
-    public void saveList(ArrayList<Person> persons) {
+    private void saveList(ArrayList<Person> persons) {
         SharedPreferences sPref = getPreferences(MODE_PRIVATE);
         SharedPreferences.Editor ed = sPref.edit();
         Gson gson = new Gson();
@@ -196,7 +193,7 @@ public class MainActivity extends AppCompatActivity implements EventHandler {
         ed.apply();
     }
 
-    public ArrayList<Person> loadList() {
+    private ArrayList<Person> loadList() {
         SharedPreferences sharedPreferences = getPreferences(MODE_PRIVATE);
         List<Person> persons;
         if (sharedPreferences.contains(Constants.SAVED_LIST_KEY)) {

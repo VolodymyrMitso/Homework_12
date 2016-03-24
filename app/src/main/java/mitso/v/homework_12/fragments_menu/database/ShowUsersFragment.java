@@ -1,5 +1,13 @@
 package mitso.v.homework_12.fragments_menu.database;
 
+/**
+ *     Я працював з SQLite вперше.
+ *     Вийшло багато кода, але все працює.
+ *     database створюється і оновлюється з list.
+ *     Якщо змінити або видалити елементи database,
+ *     то будуть змінені або видалені елементи list.
+ */
+
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
